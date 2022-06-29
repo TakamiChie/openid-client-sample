@@ -8,7 +8,7 @@ A sample of Open ID Connect authentication using the openid-client module in Ele
 
 See [I'll write an article on Zenn at a later date](https://zenn.dev/takamichie) for the usage and function of each.
 
-The [feature-oidc-class branch](https://github.com/TakamiChie/openid-client-sample/tree/feature-oidc-class) shows how to simplify OIDC authentication processing by combining it into classes(license will be changed).
+The [feature-oidc-class branch](https://github.com/TakamiChie/openid-client-sample/tree/feature-oidc-class) shows how to simplify OIDC authentication processing by combining it into classes(Please confirm that the license has changed).
 
 ## A simple use case
 
