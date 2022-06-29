@@ -10,7 +10,7 @@ See [I'll write an article on Zenn at a later date](https://zenn.dev/takamichie)
 
 In another branch, we plan to create a class version of OIDC authentication in a form that is actually easy to use. Check that too (license will be changed).
 
-## 簡単な使い方
+## A simple use case
 
 1. Rename `sample.env` to `.env` and write the configuration of the Open ID Connect service you want to connect to.
 2. Run it as it is and click the Authorise button (you can also debug from Visual Studio Code because the debug settings for Visual Studio Code are also filled in).
