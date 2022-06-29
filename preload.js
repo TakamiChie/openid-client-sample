@@ -17,6 +17,8 @@ contextBridge.exposeInMainWorld(
   "requires", {
     authenticate: async() => { return await ipcRenderer.invoke("authenticate"); },
     refresh: async() => { return await ipcRenderer.invoke("refresh"); },
+    savetofile: async() => { return await ipcRenderer.invoke("savetofile"); },
+    loadfromfile: async() => { return await ipcRenderer.invoke("loadfromfile"); },
     on: (channel, func) => { ipcRenderer.on(channel, (event, ...args) => func(...args)) }
   }
 );

@@ -4,8 +4,9 @@ const { generators, Issuer, TokenSet } = require("openid-client");
 const fs = require("fs-extra");
 const os = require("os");
 
-const APP_SECRET = crypto.createHash("md5").update(os.hostname(), "binary").digest("hex");
-const APP_BUFFER_SECRET = crypto.createHash("md5").update(`${os.platform()}${os.arch()}`, "binary").digest("hex");
+const APP_SECRET = crypto.createHash("md5").update(os.hostname(), "binary").digest("hex").slice(0, 32);
+const APP_BUFFER_SECRET = crypto.createHash("md5").update(`${os.platform()}${os.arch()}`, "binary").digest("hex").slice(0, 16);
+const ENCRYPT_METHOD = 'aes-256-cbc';
 
 /**
  * A class for authentication by Open ID Connect.
@@ -166,11 +167,11 @@ class OIDC{
    * @param {string} file_name The name of the file to be written
    */
   async saveToFile(file_name){
-    const iv = Buffer.from(APP_BUFFER_SECRET);
-    const cipher = crypto.createCipheriv("aes-256-ocb", Buffer.from(APP_SECRET), iv);
     const encrypt = (data) => {
+      const iv = Buffer.from(APP_BUFFER_SECRET);
+      const cipher = crypto.createCipheriv(ENCRYPT_METHOD, Buffer.from(APP_SECRET), iv);
       const encrypted = cipher.update(JSON.stringify(data));
-      return buffer.concat([encrypted, cipher.final()]);
+      return Buffer.concat([encrypted, cipher.final()]).toString("hex");
     }
     await fs.writeFile(file_name, JSON.stringify({
       "a": encrypt(this.JWT),
@@ -186,14 +187,14 @@ class OIDC{
    */
   async loadFromFile(file_name){
     if(!fs.existsSync(file_name)) return false;
-    basedata = JSON.parse(await fs.readFile(file_name));
+    let basedata = JSON.parse(await fs.readFile(file_name));
     if(basedata.c == this.#check_string){
-      const iv = Buffer.from(APP_BUFFER_SECRET);
-      const decipher = crypto.createDecipheriv("aes-256-ocb", Buffer.from(APP_SECRET), iv);
       const decrypt = (text) => {
+        const iv = Buffer.from(APP_BUFFER_SECRET);
+        const decipher = crypto.createDecipheriv(ENCRYPT_METHOD, Buffer.from(APP_SECRET), iv);
         const encryptedtext = Buffer.from(text, "hex");
         const decrypted = decipher.update(encryptedtext);
-        return JSON.parse(Buffer.concat([decrypted, decipher.final]));
+        return JSON.parse(Buffer.concat([decrypted, decipher.final()]).toString());
       }
       this.#jwt = decrypt(basedata.a);
       this.#id_token = decrypt(basedata.b);

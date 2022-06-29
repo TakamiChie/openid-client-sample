@@ -18,6 +18,14 @@ document.getElementById("clear").addEventListener("click", () => {
   while(log.childNodes[0]) log.removeChild(log.childNodes[0]);
 });
 
+document.getElementById("saveToFile").addEventListener("click", () => {
+  window.requires.savetofile();
+});
+
+document.getElementById("loadFromFile").addEventListener("click", () => {
+  window.requires.loadfromfile();
+});
+
 window.requires.on("log", (text, level) => {
   printLog(text, level);
 });

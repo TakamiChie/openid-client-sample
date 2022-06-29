@@ -63,6 +63,24 @@ ipcMain.handle("refresh", async () => {
   oidc.refresh(onAuthenticate);
 });
 
+ipcMain.handle("savetofile", async() => {
+  await oidc.saveToFile("sessiondata.json");
+  mainWindow.webContents.send("log", "Save complete at 'sessiondata.json'", "info");
+});
+
+ipcMain.handle("loadfromfile", async() => {
+  let text = "";
+  let level = "";
+  if(await oidc.loadFromFile("sessiondata.json")){
+    text = "Load complete at 'sessiondata.json'";
+    level = "info";
+  }else{
+    text = "The load failed because the version is different or the file does not exist.";
+    level = "error";
+  }
+  mainWindow.webContents.send("log", text, level);
+});
+
 function onAuthenticate(userinfo, idtoken) {
   mainWindow.webContents.send("authenticated", {
     tokenSet: idtoken,
