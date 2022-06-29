@@ -1,3 +1,42 @@
 /* styles.css */
 
 /* Add styles here to customize the appearance of your app */
+
+#buttons{
+  margin: 3ex;
+}
+
+#log{
+  width: calc(100% - 4ex);
+  background-color: black;
+  color: whitesmoke;
+  height: 10em;
+  margin: 1ex;
+  padding: 1ex;
+  border-width: 2px;
+  border-style: inset;
+  border-color: white;
+  overflow-y: scroll;
+}
+
+#log p {
+  margin: 0.1rem;
+  font-weight: bold;
+}
+
+#log p.error{
+  color: #dc3545;
+}
+
+#log p.warn{
+  color: #ffc107;
+}
+
+#log p.info{
+  color: #17a2b8;
+}
+
+#log p.debug{
+  color: #6c757d;
+  font-weight: normal;
+}

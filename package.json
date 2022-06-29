@@ -1,12 +1,12 @@
 {
-  "name": "electron-quick-start",
+  "name": "openid-client-sample",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A sample that implements Open ID Connect with a desktop app using Electron and openid-client.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/TakamiChie/openid-client-sample",
   "keywords": [
     "Electron",
     "quick",
@@ -18,5 +18,10 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^19.0.6"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "openid-client": "^5.1.7"
   }
 }

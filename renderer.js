@@ -4,3 +4,35 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
+document.getElementById("authenticate").addEventListener("click", async () => {
+  window.requires.authenticate();
+});
+
+document.getElementById("refresh").addEventListener("click", () => {
+  window.requires.refresh();
+});
+
+document.getElementById("clear").addEventListener("click", () => {
+  const log = document.getElementById("log");
+  while(log.childNodes[0]) log.removeChild(log.childNodes[0]);
+});
+
+window.requires.on("log", (text, level) => {
+  printLog(text, level);
+});
+
+window.requires.on("authenticated", (data) => {
+  console.log(data);
+  printLog(`Hello:${data.userInfo.preferred_username || data.userInfo.name}`, "info");
+  printLog(`Get Access Token:${data.tokenSet.access_token.slice(0, 8)}...`, "info");
+});
+
+function printLog(text, level) {
+  const log = document.getElementById("log");
+  const msg = document.createElement("p");
+  msg.textContent = text;
+  msg.classList.value = `${level}`;
+  log.appendChild(msg);
+  msg.scrollIntoView();
+}
